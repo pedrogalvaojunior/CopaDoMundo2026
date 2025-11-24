@@ -60,28 +60,6 @@ A execução segue a mesma lógica do projeto original: **respeitar a ordem num�
 
 ---
 
-## 📸 Exemplos
-
-### Exemplo de Tabela de Jogos
-```sql
-SELECT * FROM Jogos ORDER BY DataPartida;
-```
-![Exemplo Tabela Jogos](https://via.placeholder.com/800x400?text=Tabela+de+Jogos)
-
-### Exemplo de Estatísticas
-```sql
-EXEC usp_EstatisticasTop24;
-```
-![Exemplo Estatísticas](https://via.placeholder.com/800x400?text=Estatisticas+Top+24)
-
----
-
-## 💡 Sugestões
-- Adicionar **GIFs** mostrando execução no SQL Server.
-- Criar **diagramas** para ilustrar fases do torneio.
-
----
-
 ### 👨‍💻 Autor
-**Pedro Galvão Júnior**  
-Projeto iniciado em Abril/2022 e atualizado para FIFA 2026.
+**Pedro Antonio Galvão Galvão Júnior - MVP Junior Galvão**  
+Projeto iniciado em Abril/2022 e atualizado para a Copa do Mundo de Futebol Masculino FIFA 2026.
