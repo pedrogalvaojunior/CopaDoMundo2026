@@ -1302,7 +1302,7 @@ Select Replicate('>>>',29) As 'Em execução - Fase - Final - Análise de Empate'
 Go
 
 -- Eliminando a ocorrência de possível empate na Final --
-If (Select Count(CodigoJogo) From Jogos Where CodigoJogo = 64 And GolsSelecao1 = GolsSelecao2) =1
+If (Select Count(CodigoJogo) From Jogos Where CodigoJogo = 104 And GolsSelecao1 = GolsSelecao2) =1
 Begin
 
  Select 'Ocorreu empate no jogo' As 'Final',' ' As 'Placar'
