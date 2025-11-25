@@ -1,4 +1,4 @@
-# 🏆 Copa do Mundo – Simulador FIFA 2026
+# 🏆 Copa do Mundo – Simulador da Copa do Mundo de Futebol Masculino 2026
 
 ![Badge](https://img.shields.io/badge/SQL%20Server-Project-blue) ![Badge](https://img.shields.io/badge/Version-2026-green) ![Badge](https://img.shields.io/badge/Status-Stable-success)
 
