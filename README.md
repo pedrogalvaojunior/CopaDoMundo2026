@@ -61,5 +61,5 @@ A execução segue a mesma lógica do projeto original: **respeitar a ordem num�
 ---
 
 ### 👨‍💻 Autor
-**Pedro Antonio Galvão Galvão Júnior - MVP Junior Galvão**  
+**Pedro Antonio Galvão Galvão Junior - MVP Junior Galvão**  
 Projeto iniciado em Abril/2022 e atualizado para a Copa do Mundo de Futebol Masculino FIFA 2026.
