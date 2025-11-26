@@ -50,7 +50,7 @@ Go 4
 
 -- Inserindo as 48 Selecoes --
 Insert Into Selecoes (NomeSelecao, CodigoPote, SiglaContinente, PosicaoRankingFifa, PontosRankingFifa)
-Values ('Canadá',1,'AC',28,1554.97), ('Estados Unidos',1,'AC',14,1676.87), ('México',1,'AC',15,1682.47), ('Espanha',1,'EU',1,1877.18), ('França',1,'EU',3,1870), ('Inglaterra',1,'EU',4,1834.12), ('Argentina',1,'AS',2,1873.33), ('Brasil',1,'AS',5,1760.46), ('Portugal',1,'EU',6,1760.38), ('Holanda',1,'EU',7,1756.27), ('Bélgica',1,'EU',8,1730.71), ('Alemanha',1,'EU',9,1724.15),
+Values ('México',1,'AC',15,1682.47),('Canadá',1,'AC',28,1554.97), ('Estados Unidos',1,'AC',14,1676.87),('Espanha',1,'EU',1,1877.18), ('França',1,'EU',3,1870), ('Inglaterra',1,'EU',4,1834.12), ('Argentina',1,'AS',2,1873.33), ('Brasil',1,'AS',5,1760.46), ('Portugal',1,'EU',6,1760.38), ('Holanda',1,'EU',7,1756.27), ('Bélgica',1,'EU',8,1730.71), ('Alemanha',1,'EU',9,1724.15),
 ('Croácia',2,'EU',10,1716.88), ('Marrocos',2,'AF',11,1713.22), ('Colômbia',2,'AS',13,1701.3), ('Uruguai',2,'AS',16,1677.62), ('Suíça',2,'EU',17,1654.69), ('Japão',2,'ASI',18,1650.11), ('Senegal',2,'AF',19,1648.69), ('Irã',2,'ASI',21,1614.75), ('Coreia do Sul',2,'ASI',22,1599.44), ('Equador',2,'AS',23,1589.38), ('Áustria',2,'EU',24,1585.5), ('Austrália',2,'ASI',26,1577.88),
 ('Panamá',3,'AC',30,1534.45), ('Noruega',3,'EU',29,1553.14), ('Egito',3,'AF',34,1518.19),  ('Argélia',3,'AF',35,1516.37),  ('Escócia',3,'EU',36,1506.77),  ('Paraguai',3,'AS',40,1494.77),  ('Costa do Marfim',3,'AF',42,1489.59), ('Tunísia',3,'AF',41,1494.49), ('Uzbequistão',3,'ASI',50,1462.03), ('Catar',3,'ASI',51,1461.6),('Arábia Saudita',3,'ASI',60,1428.74), ('África do Sul',3,'AF',61,1426.73),
 ('Jordânia',4,'ASI',66,1377.66), ('Cabo Verde',4,'AF',68,1367.95), ('Gana',4,'AF',72,1351.09), ('Curaçao',4,'AC',82,1302.7), ('Haiti',4,'AC',84,1294.49), ('Nova Zelândia',4,'OC',86,1279.25), ('Repescagem Uefa 1',4,'EU',0,0), ('Repescagem Uefa 2',4,'EU',0,0), ('Repescagem Uefa 3',4,'EU',0,0), ('Repescagem Uefa 4',4,'EU',0,0), ('Repescagem Mundial 1',4,'RM',0,0), ('Repescagem Mundial 2',4,'RM',0,0)
@@ -60,7 +60,7 @@ Select Replicate('>>>',4) As 'Em execução - Sorteio dos Grupos'
 Go
 
 -- Definindo as Seleções Donas da Casa no Grupo A posição 1, 2 e 3 --
-Insert Into Sorteios (CodigoGrupo, CodigoSelecao, PosicaoGrupo, SiglaContinente) Values (1,1,1,'AC'), (2,2,1,'AC'), (3,3,1,'AC')
+Insert Into Sorteios (CodigoGrupo, CodigoSelecao, PosicaoGrupo, SiglaContinente) Values (1,1,1,'AC'), (2,2,1,'AC'), (4,3,1,'AC')
 Go
 
 -- Definindo as variáveis de controle --
@@ -70,7 +70,7 @@ Declare @CodigoGrupo TinyInt, @CodigoSelecao TinyInt, @PosicaoGrupo TinyInt, @Si
 While (Select Count(CodigoSorteio) From Sorteios) <12
  Begin
 
- Set @CodigoGrupo = (Select Top 1 CodigoGrupo From Grupos Where CodigoGrupo >1 Order By NEWID())
+ Set @CodigoGrupo = (Select Top 1 CodigoGrupo From Grupos Where CodigoGrupo = 3 Or CodigoGrupo Between 5 And 12 Order By NEWID())
  Set @CodigoSelecao = (Select Top 1 CodigoSelecao From Selecoes Where CodigoSelecao Between 4 And 12 Order By NEWID())
  Set @PosicaoGrupo = 1
  Set @SiglaContinente = (Select SiglaContinente From Selecoes Where CodigoSelecao = @CodigoSelecao)
@@ -107,7 +107,7 @@ Begin
    If (Select Count(CodigoGrupo) From Sorteios Where CodigoGrupo=@CodigoGrupo) <4
     Begin
 
-	 If (Select Count(CodigoGrupo) From Sorteios Where CodigoGrupo = @CodigoGrupo And SiglaContinente = @SiglaContinente) <=3
+	 If (Select Count(CodigoGrupo) From Sorteios Where CodigoGrupo = @CodigoGrupo And SiglaContinente = @SiglaContinente And SiglaContinente <> 'AS') <=3
 	  Set @PosicaoGrupo = (Select Count(CodigoGrupo)+1 From Sorteios Where CodigoGrupo = @CodigoGrupo)
 	 Else 
 	  Begin
@@ -193,8 +193,8 @@ Select Row_Number() Over(Order By A.Posicao) As 'Pote',
            C.NomeSelecao As 'Grupo C', D.NomeSelecao As 'Grupo D',
            E.NomeSelecao As 'Grupo E', F.NomeSelecao As 'Grupo F',
 		   G.NomeSelecao As 'Grupo G', H.NomeSelecao As 'Grupo H',
-		   G.NomeSelecao As 'Grupo I', H.NomeSelecao As 'Grupo J',
-		   G.NomeSelecao As 'Grupo K', H.NomeSelecao As 'Grupo L'
+		   I.NomeSelecao As 'Grupo I', J.NomeSelecao As 'Grupo J',
+		   K.NomeSelecao As 'Grupo K', L.NomeSelecao As 'Grupo L'
 From CTEGrupoA A Inner Join CTEGrupoB B
                                 On A.Posicao = B.Posicao
 							   Inner Join CTEGrupoC C
