@@ -107,7 +107,7 @@ Begin
    If (Select Count(CodigoGrupo) From Sorteios Where CodigoGrupo=@CodigoGrupo) <4
     Begin
 
-	 If (Select Count(CodigoGrupo) From Sorteios Where CodigoGrupo = @CodigoGrupo And SiglaContinente = @SiglaContinente And SiglaContinente <> 'AS') <=3
+	 If (Select Count(CodigoGrupo) From Sorteios Where CodigoGrupo = @CodigoGrupo And SiglaContinente = @SiglaContinente And SiglaContinente Not In ('AS','AF','AC','ASI','OC','RM')) <=3
 	  Set @PosicaoGrupo = (Select Count(CodigoGrupo)+1 From Sorteios Where CodigoGrupo = @CodigoGrupo)
 	 Else 
 	  Begin
@@ -635,32 +635,25 @@ Go
 Select Replicate('>>>',10) As 'Em execução - Definindo as Seleções - Fase - Oitavas de Final'
 Go
 
--- Inserindo as Seleções Classificados de cada Grupo na Tabela ClassificadosOitavasDeFinal --
-Insert Into ClassificadosOitavasDeFinal (CodigoGrupoSorteio, CodigoSelecaoSorteio, ClassificacaoFinalNoGrupo)
-Select CodigoGrupoSorteio, CodigoSelecaoSorteio, ClassificacaoFinalGrupo From GrupoA
-Where ClassificacaoFinalGrupo In (1,2)
-Union 
-Select CodigoGrupoSorteio, CodigoSelecaoSorteio, ClassificacaoFinalGrupo From GrupoB
-Where ClassificacaoFinalGrupo In (1,2)
-Union 
-Select CodigoGrupoSorteio, CodigoSelecaoSorteio, ClassificacaoFinalGrupo From GrupoC
-Where ClassificacaoFinalGrupo In (1,2)
-Union 
-Select CodigoGrupoSorteio, CodigoSelecaoSorteio, ClassificacaoFinalGrupo From GrupoD
-Where ClassificacaoFinalGrupo In (1,2)
-Union 
-Select CodigoGrupoSorteio, CodigoSelecaoSorteio, ClassificacaoFinalGrupo From GrupoE
-Where ClassificacaoFinalGrupo In (1,2)
-Union 
-Select CodigoGrupoSorteio, CodigoSelecaoSorteio, ClassificacaoFinalGrupo From GrupoF
-Where ClassificacaoFinalGrupo In (1,2)
-Union 
-Select CodigoGrupoSorteio, CodigoSelecaoSorteio, ClassificacaoFinalGrupo From GrupoG
-Where ClassificacaoFinalGrupo In (1,2)
-Union 
-Select CodigoGrupoSorteio, CodigoSelecaoSorteio, ClassificacaoFinalGrupo From GrupoH
-Where ClassificacaoFinalGrupo In (1,2)
-Order By CodigoGrupoSorteio, ClassificacaoFinalGrupo
+-- Inserindo as Seleções Classificadas para as Oitavas de Finais --
+Insert Into ClassificadosOitavasDeFinal(CodigoGrupoSorteio, CodigoSelecaoSorteio, ClassificacaoFinalNoGrupo)
+Select G.CodigoGrupo, 
+           Case 
+		    When J.GolsSelecao1 > J.GolsSelecao2 Then S1.CodigoSelecao
+		    When J.GolsSelecao2 > J.GolsSelecao1 Then S2.CodigoSelecao
+           End As CodigoSelecaoSorteio,
+           C.ClassificacaoFinalNoGrupo
+From Jogos J Inner Join Grupos G
+                      On J.CodigoGrupoSorteio = G.CodigoGrupo
+                     Inner Join Selecoes S1
+                      On J.CodigoSelecao1 = S1.CodigoSelecao
+                     Inner Join Selecoes S2
+                      On J.CodigoSelecao2 = S2.CodigoSelecao
+                    Inner Join ClassificadosDezesseisAvosDeFinal C
+                     On C.CodigoSelecaoSorteio = J.CodigoSelecao1
+                     Or C.CodigoSelecaoSorteio = J.CodigoSelecao2
+Where J.CodigoJogo Between 73 And 88
+Order By J.CodigoJogo
 Go
 
 -- Consultando as Seleções Classificadas para as Oitavas de Finais --
@@ -669,7 +662,6 @@ From ClassificadosOitavasDeFinal C Inner Join Grupos G
 															On C.CodigoGrupoSorteio = G.CodigoGrupo
                                                             Inner Join Selecoes S
                                                              On C.CodigoSelecaoSorteio = S.CodigoSelecao
-
 Go
 
 Select Replicate('>>>',11) As 'Em execução - Fase - Oitavas de Final - Simulando os Jogos'

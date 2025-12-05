@@ -186,7 +186,7 @@ Begin
    If (Select Count(CodigoGrupo) From Sorteios Where CodigoGrupo=@CodigoGrupo) <4
     Begin
 
-	 If (Select Count(CodigoGrupo) From Sorteios Where CodigoGrupo = @CodigoGrupo And SiglaContinente = @SiglaContinente And SiglaContinente <> 'AS') <=3
+	 If (Select Count(CodigoGrupo) From Sorteios Where CodigoGrupo = @CodigoGrupo And SiglaContinente = @SiglaContinente And SiglaContinente Not In ('AS','AF','AC','ASI','OC','RM')) <=3
 	  Set @PosicaoGrupo = (Select Count(CodigoGrupo)+1 From Sorteios Where CodigoGrupo = @CodigoGrupo)
 	 Else 
 	  Begin

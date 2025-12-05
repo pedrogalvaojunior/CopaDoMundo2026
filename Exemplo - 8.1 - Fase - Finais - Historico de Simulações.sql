@@ -1,3 +1,8 @@
+-- Acessando --
+Use CopaDoMundo2026
+Go
+
+
 -- Criando a Stored Procedure P_HistoricoSimulacao --
 Create Or Alter Procedure P_HistoricoSimulacao @CodigoSimulador Char(1)
 As

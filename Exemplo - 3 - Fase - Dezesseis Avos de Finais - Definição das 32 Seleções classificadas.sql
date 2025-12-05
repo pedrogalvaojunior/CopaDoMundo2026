@@ -285,4 +285,3 @@ From Jogos J Inner Join Grupos G
 Where J.CodigoJogo Between 73 And 88
 Order By J.CodigoJogo
 Go
-
