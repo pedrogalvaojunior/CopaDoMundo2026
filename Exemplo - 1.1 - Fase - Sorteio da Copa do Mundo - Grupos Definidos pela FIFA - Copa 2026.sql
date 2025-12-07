@@ -116,7 +116,7 @@ Go
 
 Insert Into Sorteios (CodigoGrupo, CodigoSelecao, PosicaoGrupo, SiglaContinente)
 Select 2, CodigoSelecao, CodigoPote, SiglaContinente From Selecoes
-Where NomeSelecao In ('Canadá','Repescagem Uefa 2','Catar','Suíça')
+Where NomeSelecao In ('Canadá','Repescagem Uefa 1','Catar','Suíça')
 Go
 
 Insert Into Sorteios (CodigoGrupo, CodigoSelecao, PosicaoGrupo, SiglaContinente)
